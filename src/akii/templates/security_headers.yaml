@@ -1,0 +1,41 @@
+id: security-headers
+
+title: HTTP Security Headers
+
+description: >
+  Analyze common HTTP security headers to identify missing,
+  misconfigured, or insecure protections against web-based attacks.
+
+severity: high
+
+headers:
+  - Strict-Transport-Security
+  - X-Content-Type-Options
+  - X-Frame-Options
+  - Referrer-Policy
+  - Permissions-Policy
+  - Cross-Origin-Opener-Policy
+  - Cross-Origin-Embedder-Policy
+  - Cross-Origin-Resource-Policy
+  - Origin-Agent-Cluster
+  - X-Permitted-Cross-Domain-Policies
+  - X-Download-Options
+  - X-DNS-Prefetch-Control
+  - Clear-Site-Data
+
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+  - https://owasp.org/www-project-secure-headers/
+  - https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html
+
+owasp:
+  - A05:2021 Security Misconfiguration
+
+cwe:
+  - CWE-693
+
+tags:
+  - security-header
+  - hardening
+  - browser
+  - http

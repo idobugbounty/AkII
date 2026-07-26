@@ -1,0 +1,27 @@
+id: csp
+
+title: Content Security Policy
+
+description: >
+  Analyze the Content-Security-Policy header and identify
+  missing or insecure directives.
+
+severity: high
+
+header: 
+  - Content-Security-Policy
+
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+  - https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html
+
+owasp:
+  - A05:2021 Security Misconfiguration
+
+cwe:
+  - CWE-693
+
+tags:
+  - csp
+  - security-header
+  - browser

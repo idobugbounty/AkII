@@ -1,0 +1,32 @@
+id: cookie
+
+title: HTTP Cookie Security
+
+description: >
+  Analyze HTTP cookies and Set-Cookie headers to identify
+  missing security attributes and insecure cookie configurations.
+
+severity: high
+
+headers:
+  - Set-Cookie
+  - Cookie
+
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+  - https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+
+owasp:
+  - A07:2021 Identification and Authentication Failures
+  - A05:2021 Security Misconfiguration
+
+cwe:
+  - CWE-614
+  - CWE-565
+
+tags:
+  - cookie
+  - session
+  - security-header
+  - authentication

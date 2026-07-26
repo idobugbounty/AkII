@@ -1,0 +1,36 @@
+id: cache
+
+title: HTTP Cache Policy
+
+description: >
+  Analyze HTTP caching headers to identify insecure,
+  missing, or misconfigured cache directives that may
+  expose sensitive content or reduce cache effectiveness.
+
+severity: medium
+
+headers:
+  - Cache-Control
+  - Expires
+  - Pragma
+  - ETag
+  - Last-Modified
+  - Age
+  - Vary
+
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary
+
+owasp:
+  - A05:2021 Security Misconfiguration
+
+cwe:
+  - CWE-525
+
+tags:
+  - cache
+  - http
+  - security-header

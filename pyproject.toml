@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "akii"
+version = "0.1.0"
+description = "HTTP header analyzer"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "requests>=2.32.0",
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+akii = "akii.core.cli.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
