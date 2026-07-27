@@ -34,7 +34,7 @@ def get_banner():
 #+#║    #+#║ #+#║  #+#║ #+#║ #+#║ v{__version__}
 ###║    ###║ ###║  ###║ ###║ ###║
 ═══╝    ═══╝ ═══╝  ═══╝ ═══╝ ═══╝ 
-        - MintTester-IO -
+        - Mintesio -
 """
 	
 	return akii
