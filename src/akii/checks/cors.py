@@ -1,28 +1,43 @@
-from pathlib import Path
-import yaml
+from akii.core.template_loader import load_template
 
-template_path = (
-    Path(__file__).parent.parent / "templates" / "cors.yaml"
-)
-
-with template_path.open("r", encoding="utf-8") as f:
-    RULE = yaml.safe_load(f)
+RULE = load_template("cors")
 
 
-def cors_analyze(config, response):
-    print("=== CORS Analysis ===")
-    print("*** We found something interesting for you! ***")
+def cors_detect(config, response):
+    findings = {}
 
-    count = 0
+    for check in RULE["checks"]:
+        header = check["header"]
 
-    for header in RULE["headers"]:
         if header in response.headers:
-            count += 1
-            print(f"({count}) {header}: {response.headers[header]}")
+            findings[header] = response.headers[header]
 
-    if count == 0:
-        print("No CORS headers found.")
+    return findings
 
-    if config.get("output"):
-        output_path = Path(config["output"]).resolve(strict=False)
-        print(f"\n*** The results have been saved to: {output_path}***")
+
+def cors_analyze(findings):
+    results = []
+
+    for check in RULE["checks"]:
+        header = check["header"]
+
+        if header not in findings:
+            continue
+
+        value = findings[header]
+
+        for rule in check.get("rules", []):
+            if value == rule["value"]:
+                results.append({
+                    "header": header,
+                    "value": value,
+                    "severity": rule["severity"],
+                    "message": rule["message"],
+                })
+
+    return results
+
+
+def cors_runner(config, response):
+    findings = cors_detect(config, response)
+    return cors_analyze(findings)

@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
 import requests
 
 from akii import __version__

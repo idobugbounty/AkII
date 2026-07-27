@@ -6,10 +6,38 @@ description: >
   Analyze the Content-Security-Policy header and identify
   missing or insecure directives.
 
-severity: high
+checks:
+  - header: Content-Security-Policy
+    required: true
+    rules:
+      - value: "'unsafe-inline'"
+        severity: high
+        message: >
+          The 'unsafe-inline' source expression allows inline scripts or styles,
+          reducing the effectiveness of Content Security Policy.
 
-header: 
-  - Content-Security-Policy
+      - value: "'unsafe-eval'"
+        severity: high
+        message: >
+          The 'unsafe-eval' source expression allows dynamic code execution and
+          weakens Content Security Policy protections.
+
+      - value: "*"
+        severity: medium
+        message: >
+          Wildcard sources allow content from any origin and should be avoided
+          unless explicitly required.
+
+      - value: "data:"
+        severity: low
+        message: >
+          The data: scheme is allowed. Verify that this is necessary and limited
+          to appropriate directives.
+
+recommendation: >
+  Define a restrictive Content Security Policy, avoid unsafe source expressions,
+  minimize wildcard usage, and explicitly specify trusted sources for each
+  directive.
 
 references:
   - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy

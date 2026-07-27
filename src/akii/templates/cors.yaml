@@ -6,20 +6,42 @@ description: >
   Analyze Cross-Origin Resource Sharing (CORS) response headers
   to identify insecure or overly permissive configurations.
 
-severity: medium
+checks:
+  - header: Access-Control-Allow-Origin
+    rules:
+      - value: "*"
+        severity: high
+        message: >
+          Wildcard origin allows requests from any origin.
 
-headers:
-  - Access-Control-Allow-Origin
-  - Access-Control-Allow-Credentials
-  - Access-Control-Allow-Methods
-  - Access-Control-Allow-Headers
-  - Access-Control-Max-Age
-  - Access-Control-Expose-Headers
+      - value: "null"
+        severity: medium
+        message: >
+          The null origin should only be trusted when explicitly required.
+
+  - header: Access-Control-Allow-Credentials
+    rules:
+      - value: "true"
+        severity: info
+        message: >
+          Credentials are allowed. Verify that trusted origins are explicitly
+          configured.
+
+  - header: Access-Control-Allow-Methods
+    rules: []
+
+  - header: Access-Control-Allow-Headers
+    rules: []
+
+  - header: Access-Control-Max-Age
+    rules: []
+
+  - header: Access-Control-Expose-Headers
+    rules: []
 
 recommendation: >
-  Restrict allowed origins to trusted domains, avoid using
-  wildcard origins with credentials, and expose only the
-  headers required by the application.
+  Restrict allowed origins to trusted domains, avoid using wildcard origins
+  with credentials, and expose only the headers required by the application.
 
 references:
   - https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
