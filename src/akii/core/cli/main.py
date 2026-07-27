@@ -1,9 +1,15 @@
+import sys
+
 from akii.core.cli.parser import build_parser
 from akii.core.controller import run
 from akii.ui.output import banner
 
 
 def main():
+    if len(sys.argv) == 1:
+        banner()
+        return
+
     parser = build_parser()
     args = parser.parse_args()
 
