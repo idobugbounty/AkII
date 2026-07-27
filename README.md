@@ -116,7 +116,7 @@ akii -T https://example.com -o report.txt
 Export JSON:
 
 ```bash
-akii -T https://example.com --json
+akii -T https://example.com -jo report.txt
 ```
 
 ## Current Checks

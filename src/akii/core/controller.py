@@ -1,28 +1,39 @@
+import re
+
 from akii.http.client import request
 from akii.ui.output import display_http, csp_result, cors_result, display_target
 from akii.checks.csp import csp_runner
 from akii.checks.cors import cors_runner
-from akii.core.reporter import txt_output
+from akii.core.reporter import txt_output, json_output
+
+
+URL_RE = re.compile(r"https?://[^\s]+")
+
+
+def extract_url(line):
+    match = URL_RE.search(line)
+    return match.group(0) if match else None
 
 
 def load_input(config):
-    if config.get("wordlist"):
-        configs = []
+    if not config.get("wordlist"):
+        return [config]
 
-        with open(config["wordlist"], encoding="utf-8") as f:
-            for line in f:
-                target = line.strip()
+    configs = []
 
-                if not target:
-                    continue
+    with open(config["wordlist"], encoding="utf-8") as f:
+        for line in f:
+            url = extract_url(line)
 
-                target_config = config.copy()
-                target_config["target"] = target
-                configs.append(target_config)
+            if not url:
+                continue
 
-        return configs
+            target_config = config.copy()
+            target_config["target"] = url
+            configs.append(target_config)
 
-    return [config]
+    return configs
+
 
 def process_target(config):
     display_target(config)
@@ -43,6 +54,7 @@ def process_target(config):
         "csp": csp_results,
     }
 
+
 def run(config):
     inputs = load_input(config)
 
@@ -52,4 +64,7 @@ def run(config):
         all_results.append(process_target(target_config))
 
     if config.get("output"):
-        txt_output(all_results, config["output"])
+        if config.get("json"):
+            json_output(all_results, config["output"])
+        else:
+            txt_output(all_results, config["output"])

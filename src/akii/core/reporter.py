@@ -1,12 +1,13 @@
 from pathlib import Path
-
+import json
 
 def txt_output(results, output):
     output_path = Path(output).resolve(strict=False)
 
     with output_path.open("w", encoding="utf-8") as f:
         for target in results:
-            f.write(f"Target: {target['target']}\n\n")
+            f.write("=" * 60)
+            f.write(f"\nTarget: {target['target']}\n\n")
 
             # CORS
             f.write("=== CORS Analysis ===\n")
@@ -39,3 +40,9 @@ def txt_output(results, output):
                     f.write(f"    Message : {result['message']}\n")
 
                 f.write("\n")
+
+def json_output(results, output):
+    output_path = Path(output).resolve(strict=False)
+
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
