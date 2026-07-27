@@ -1,4 +1,5 @@
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 from akii.http.client import request
 from akii.ui.output import display_http, csp_result, cors_result, display_target

@@ -1,20 +1,19 @@
 import argparse
 
+from akii import __version__
 from akii.core.flags.general import (
     INPUT_FLAGS,
     REQUEST_FLAGS,
-    PERFORMANCE_FLAGS,
+    #PERFORMANCE_FLAGS,
     OUTPUT_FLAGS,
-    MISCELLANEOUS_FLAGS,
 )
 
 
 FLAG_GROUPS = (
     ("Input", INPUT_FLAGS),
     ("Request", REQUEST_FLAGS),
-    ("Performance", PERFORMANCE_FLAGS),
+    #("Performance", PERFORMANCE_FLAGS),
     ("Output", OUTPUT_FLAGS),
-    ("Miscellaneous", MISCELLANEOUS_FLAGS),
 )
 
 
@@ -29,6 +28,12 @@ def build_parser():
             max_help_position=50,
             width=130,
         ),
+    )
+
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"AkII {__version__}",
     )
 
     # Create and register all argument groups.

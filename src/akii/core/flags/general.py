@@ -33,31 +33,34 @@ REQUEST_FLAGS = {
         "metavar": "",
     },
 
-    "Cookie": {
-        "flags": ["-C", "--cookie"],
-        "type": str,
-        "default": None,
-        "help": "Send cookies with the request (e.g. 'session=abc123').",
-        "metavar": "",
-    },
+# Disabled until implemented.
+#   "Cookie": {
+#       "flags": ["-C", "--cookie"],
+#       "type": str,
+#       "default": None,
+#       "help": "Send cookies with the request (e.g. 'session=abc123').",
+#       "metavar": "",
+#   },
 
-    "Data": {
-        "flags": ["-D", "--data"],
-        "type": str,
-        "default": None,
-        "help": "Send data in the request body.",
-        "metavar": "",
-    },
+# Disabled until implemented.
+#    "Data": {
+#        "flags": ["-D", "--data"],
+#        "type": str,
+#        "default": None,
+#        "help": "Send data in the request body.",
+#        "metavar": "",
+#    },
 }
 
+# Disabled until thread-safe output is implemented.
 PERFORMANCE_FLAGS = {
-    "Concurrency": {
-        "flags": ["-c", "--concurrency"],
-        "type": int,
-        "default": 1,
-        "help": "Number of concurrent requests.",
-        "metavar": "",
-    },
+    # "Concurrency": {
+    #     "flags": ["-c", "--concurrency"],
+    #     "type": int,
+    #     "default": 1,
+    #     "help": "Number of concurrent requests.",
+    #     "metavar": "",
+    # },
 }
 
 OUTPUT_FLAGS = {
@@ -91,19 +94,5 @@ OUTPUT_FLAGS = {
         "flags": ["--verbose"],
         "action": "store_true",
         "help": "Display both the HTTP request and response.",
-    },
-}
-
-MISCELLANEOUS_FLAGS = {
-    "Version": {
-        "flags": ["-v", "--version"],
-        "action": "store_true",
-        "help": "Show version information.",
-    },
-
-    "Update": {
-        "flags": ["--update"],
-        "action": "store_true",
-        "help": "Update Akii to the latest version.",
     },
 }

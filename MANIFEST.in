@@ -1,0 +1,1 @@
+recursive-include src/akii/templates *.yaml
