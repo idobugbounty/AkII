@@ -1,35 +1,14 @@
-from concurrent.futures import ThreadPoolExecutor
-from queue import Queue
-from threading import Thread
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-q = Queue()
+from akii.scan.scanner import scan
 
 
-def ui_worker():
-    while True:
-        result = q.get()
-
-        if result is None:
-            break
-
-        print(result)
-
-        q.task_done()
-
-
-def execute(tasks, worker, max_workers=10):
-    ui = Thread(target=ui_worker)
-    ui.start()
-
-    def wrapped(task):
-        result = worker(task)
-        q.put(result)
-        return result
-
+def execute(tasks, max_workers=10):
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        results = list(executor.map(wrapped, tasks))
+        futures = [
+            executor.submit(scan, task)
+            for task in tasks
+        ]
 
-    q.put(None)
-    ui.join()
-
-    return results
+        for future in as_completed(futures):
+            yield future.result()
