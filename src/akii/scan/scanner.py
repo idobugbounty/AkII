@@ -7,17 +7,17 @@ def scan(config):
 
     if response is None:
         return {
-            "target": config["target"],
-            "error": "Request failed",
+            "config": config,
+            "error": "Failed to receive HTTP response.",
             "response": None,
             "cors": [],
             "csp": [],
         }
 
     return {
-        "target": config["target"],
+        "config": config,
+        "error": None,
         "response": response,
         "cors": cors_runner(config, response),
         "csp": csp_runner(config, response),
-        "error": None,
     }
