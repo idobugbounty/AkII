@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+Improved KeyboardInterrupt handling
+
 ## 0.2.0
 
 Added timeout handling
