@@ -1,12 +1,11 @@
 import re
-from concurrent.futures import ThreadPoolExecutor
 
-from akii.http.client import request
-from akii.output.terminal import display_http, csp_result, cors_result, display_target
-from akii.checks.csp import csp_runner
-from akii.checks.cors import cors_runner
-from akii.output.reporter import txt_output, json_output
-from akii.scan.scanner import scan
+from akii.output.reporter import json_output, txt_output
+from akii.output.terminal import (
+    display_findings,
+    display_http,
+)
+from akii.scan.executor import execute
 
 
 URL_RE = re.compile(r"https?://[^\s]+")
@@ -36,29 +35,31 @@ def load_input(config):
 
     return configs
 
-def process_target(config):
-    result = scan(config)
-
-    display_target(config)
-
-    if result["error"]:
-        print(result["error"])
-        return result
-
-    display_http(config, result["response"])
-    cors_result(result["cors"])
-    csp_result(result["csp"])
-
-    return result
-
 
 def run(config):
     inputs = load_input(config)
 
     all_results = []
 
-    for target_config in inputs:
-        all_results.append(process_target(target_config))
+    for result in execute(
+        inputs,
+        max_workers=config.get("concurrency", 10),
+    ):
+        all_results.append(result)
+
+        if result["error"]:
+            print("=" * 60)
+            print(f"Target: {result['config']['target']}")
+            print(result["error"])
+            print()
+            continue
+
+        display_findings(result)
+
+        display_http(
+            result["config"],
+            result["response"],
+        )
 
     if config.get("output"):
         if config.get("json"):
