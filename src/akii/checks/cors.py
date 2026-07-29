@@ -1,7 +1,6 @@
-from akii.core.template_loader import load_template
+from akii.templates.template_loader import load_template
 
 RULE = load_template("cors")
-
 
 def cors_detect(config, response):
     findings = {}
@@ -11,7 +10,7 @@ def cors_detect(config, response):
 
         if header in response.headers:
             findings[header] = response.headers[header]
-
+            
     return findings
 
 

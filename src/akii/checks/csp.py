@@ -1,7 +1,6 @@
-from akii.core.template_loader import load_template
+from akii.templates.template_loader import load_template
 
 RULE = load_template("csp")
-
 
 def csp_detect(config, response):
     findings = {}

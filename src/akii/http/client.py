@@ -1,4 +1,5 @@
 import requests
+from concurrent.futures import ThreadPoolExecutor
 
 from akii import __version__
 
@@ -17,12 +18,17 @@ def request(config):
         name, value = config["cookie"].split("=", 1)
         cookies[name.strip()] = value.strip()
 
-    r = requests.request(
-        method=config["method"],
-        url=config["target"],
-        headers=headers or None,
-        cookies=cookies or None,
-        data=config.get("data"),
-    )
+    
+    try:
+        r = requests.request(
+            method=config["method"],
+            url=config["target"],
+            headers=headers or None,
+            cookies=cookies or None,
+            data=config.get("data"),
+            timeout=config.get("timeout", 10),
+        )
+    except requests.RequestException:
+        return None
 
     return r

@@ -1,6 +1,6 @@
 from colorama import Fore, Style, init
 
-from akii.ui.banner import get_banner
+from akii.output.banner import get_banner
 
 init(autoreset=True)
 

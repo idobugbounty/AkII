@@ -2,10 +2,11 @@ import re
 from concurrent.futures import ThreadPoolExecutor
 
 from akii.http.client import request
-from akii.ui.output import display_http, csp_result, cors_result, display_target
+from akii.output.terminal import display_http, csp_result, cors_result, display_target
 from akii.checks.csp import csp_runner
 from akii.checks.cors import cors_runner
-from akii.core.reporter import txt_output, json_output
+from akii.output.reporter import txt_output, json_output
+from akii.scan.scanner import scan
 
 
 URL_RE = re.compile(r"https?://[^\s]+")
@@ -35,25 +36,20 @@ def load_input(config):
 
     return configs
 
-
 def process_target(config):
+    result = scan(config)
+
     display_target(config)
 
-    response = request(config)
+    if result["error"]:
+        print(result["error"])
+        return result
 
-    display_http(config, response)
+    display_http(config, result["response"])
+    cors_result(result["cors"])
+    csp_result(result["csp"])
 
-    cors_results = cors_runner(config, response)
-    cors_result(cors_results)
-
-    csp_results = csp_runner(config, response)
-    csp_result(csp_results)
-
-    return {
-        "target": config["target"],
-        "cors": cors_results,
-        "csp": csp_results,
-    }
+    return result
 
 
 def run(config):

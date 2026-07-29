@@ -2,7 +2,7 @@ import sys
 
 from akii.core.cli.parser import build_parser
 from akii.core.controller import run
-from akii.ui.output import banner
+from akii.output.terminal import banner
 
 
 def main():

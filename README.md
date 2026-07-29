@@ -1,6 +1,6 @@
 # AkII
 
-> A fast and lightweight HTTP security header analyzer.
+> A lightweight HTTP security header analyzer
 
 AkII is an open-source security tool for analyzing HTTP response headers and identifying common security misconfigurations, such as weak or missing security headers.
 
@@ -19,9 +19,9 @@ AkII is an open-source security tool for analyzing HTTP response headers and ide
 
 ## Why AkII?
 
-AkII is designed for speed, automation, and extensibility.
+AkII is designed to be extensible and automation-friendly.
 
-AkII focuses on one task: analyzing HTTP security headers quickly and consistently.
+It focuses on one task: analyzing HTTP security headers consistently.
 
 It is suitable for:
 
@@ -48,7 +48,7 @@ pip install akii
 ### From Source
 
 ```bash
-git clone https://github.com/MintTester-IO/AkII.git
+git clone https://github.com/Mintesio/AkII.git
 cd akii
 pip install -e .
 ```
@@ -125,17 +125,6 @@ akii -T https://example.com -jo report.txt
 - Content Security Policy (CSP)
 
 More security header checks will be added in future releases.
-
-## Project Structure
-
-```
-src/akii/
-├── checks/      # Detection and analysis modules
-├── core/        # Controller, CLI, reporting
-├── http/        # HTTP client
-├── templates/   # YAML rule definitions
-└── ui/          # Terminal output
-```
 
 ## Roadmap
 
