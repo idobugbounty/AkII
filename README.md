@@ -52,6 +52,47 @@ git clone https://github.com/Mintesio/AkII.git
 cd akii
 pip install -e .
 ```
+## Update
+
+To update AkII to the latest version, use the command that matches your installation method.
+
+### Installed with pip
+
+Update AkII using:
+
+```bash
+pip install --upgrade akii
+```
+
+or:
+
+```bash
+pip install -U akii
+```
+
+### Installed with pipx
+
+Update AkII using:
+
+```bash
+pipx upgrade akii
+```
+
+To update all packages installed with pipx:
+
+```bash
+pipx upgrade-all
+```
+
+### Check current version
+
+You can check the installed version with:
+
+```bash
+akii --version
+```
+
+If you encounter any issues after updating, make sure you are running the latest version before reporting a bug.
 
 ## Uninstallation
 
