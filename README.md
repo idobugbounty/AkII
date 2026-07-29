@@ -25,7 +25,6 @@ It focuses on one task: analyzing HTTP security headers consistently.
 
 It is suitable for:
 
-- CI/CD pipelines
 - Security automation
 - Bug bounty workflows
 - Batch scanning with wordlists
