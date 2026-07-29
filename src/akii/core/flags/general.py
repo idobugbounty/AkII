@@ -33,6 +33,15 @@ REQUEST_FLAGS = {
         "metavar": "",
     },
 
+
+    "Timeout": {
+        "flags": ["--timeout"],
+        "type": int,
+        "default": 10,
+        "help": "HTTP request timeout in seconds (default: 10).",
+        "metavar": "",
+    },
+
 # Disabled until implemented.
 #   "Cookie": {
 #       "flags": ["-C", "--cookie"],

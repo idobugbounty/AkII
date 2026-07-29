@@ -26,7 +26,7 @@ def request(config):
             headers=headers or None,
             cookies=cookies or None,
             data=config.get("data"),
-            timeout=config.get("timeout", 10),
+            timeout=config.get("timeout"),
         )
     except requests.RequestException:
         return None

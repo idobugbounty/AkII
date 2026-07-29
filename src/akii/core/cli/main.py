@@ -15,8 +15,11 @@ def main():
 
     banner()
 
-    config = vars(args)
-    run(config)
+    try:
+        run(vars(args))
+    except KeyboardInterrupt:
+        print("\nScan interrupted by user.")
+        sys.exit(130)
 
 
 if __name__ == "__main__":
