@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from colorama import Fore, Style, init
 
 from akii.output.banner import get_banner
@@ -62,42 +64,37 @@ def display_http(config, response):
         print()
 
 
-def csp_result(results):
-    print(Fore.CYAN + "=== CSP Analysis ===")
+def display_findings(result):
+    findings = []
 
-    if not results:
-        print(Fore.GREEN + "No CSP issues found.\n")
+    findings.extend(result.get("cors", []))
+    findings.extend(result.get("csp", []))
+
+    print("=" * 60)
+    print(Fore.YELLOW + f"Target: {result['config']['target']}\n")
+
+    if not findings:
+        print(Fore.GREEN + "No issues found.\n")
         return
 
-    for count, result in enumerate(results, start=1):
-        color = severity_color(result["severity"])
+    grouped = defaultdict(list)
 
-        print(f"({count}> {color}[{result['severity'].upper()}]{Style.RESET_ALL} {result['header']}")
+    for finding in findings:
+        severity = finding.get("severity", "INFO").upper()
+        grouped[severity].append(finding)
 
-        if "value" in result:
-            print(f"    {Fore.GREEN}Value{Style.RESET_ALL}   : {result['value']}")
+    print("Findings:")
 
-        print(f"    {Fore.GREEN}Message{Style.RESET_ALL} : {result['message']}")
+    for severity, items in grouped.items():
+        color = severity_color(severity)
 
-    print()
+        print(
+            f"  {color}{severity:<8}{Style.RESET_ALL} [{len(items)}]"
+        )
 
-
-def cors_result(results):
-    print(Fore.CYAN + "=== CORS Analysis ===")
-
-    if not results:
-        print(Fore.GREEN + "No CORS issues found.\n")
-        return
-
-    for count, result in enumerate(results, start=1):
-        color = severity_color(result["severity"])
-
-        print(f"({count}> {color}[{result['severity'].upper()}]{Style.RESET_ALL} {result['header']}")
-
-        if "value" in result:
-            print(f"    {Fore.GREEN}Value{Style.RESET_ALL}   : {result['value']}")
-
-        print(f"    {Fore.GREEN}Message{Style.RESET_ALL} : {result['message']}")
+        for item in items:
+            name = item.get("header") or item.get("title", "Unknown")
+            print(f"      - {name}")
 
     print()
 
